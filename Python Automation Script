@@ -1,0 +1,43 @@
+import os
+import shutil
+
+
+folder_path = r"C:\Users\lapto\OneDrive\Documents"
+
+
+
+folders = {
+    "Images": ['.png', '.jpg', '.jpeg', '.gif'],
+    "Videos": ['.mp4', '.mkv', '.mov'],
+    "Documents": ['.pdf', '.docx', '.txt', '.xlsx'],
+    "Others": []
+}
+
+
+for folder in folders:
+    if not os.path.exists(os.path.join(folder_path, folder)):
+        os.makedirs(os.path.join(folder_path, folder))
+
+
+for file in os.listdir(folder_path):
+    file_path = os.path.join(folder_path, file)
+
+    
+    if os.path.isdir(file_path):
+        continue
+
+    file_ext = os.path.splitext(file)[1].lower()
+
+    moved = False
+    for folder, extensions in folders.items():
+        if file_ext in extensions:
+            shutil.move(file_path, os.path.join(folder_path, folder, file))
+            print(f"Moved: {file} → {folder}")
+            moved = True
+            break
+
+    if not moved:
+        shutil.move(file_path, os.path.join(folder_path, "Others", file))
+        print(f"Moved: {file} → Others")
+
+print("✔ Folder Organized Successfully!")
