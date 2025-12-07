@@ -1,0 +1,26 @@
+import pandas as pd
+
+# Step 1: Load the CSV file
+data = pd.read_csv("students.csv")
+
+# Step 2: Show the first few rows
+print("📄 First 5 rows of the data:")
+print(data.head())
+
+# Step 3: Basic statistics
+print("\n📊 Statistics of scores:")
+print(data['Score'].describe())
+
+# Step 4: Average score
+average_score = data['Score'].mean()
+print(f"\n✅ Average Score: {average_score:.2f}")
+
+# Step 5: Students with score > 80
+high_scores = data[data['Score'] > 80]
+print("\n🌟 Students scoring above 80:")
+print(high_scores)
+
+# Step 6: Group by Subject and get average
+subject_avg = data.groupby('Subject')['Score'].mean()
+print("\n📚 Average score by subject:")
+print(subject_avg)
